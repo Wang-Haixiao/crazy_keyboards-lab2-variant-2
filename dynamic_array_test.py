@@ -87,16 +87,21 @@ class TestDynamicArray(unittest.TestCase):
     # 10 Filter data structure by specific predicate
     def test_filter(self):
         arr = from_list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-        self.assertEqual(filter(arr, (lambda x: x % 2 == 0)), from_list([2, 4, 6, 8, 10]))
-        self.assertEqual(filter(arr, (lambda x: x > 5)), from_list([6, 7, 8, 9, 10]))
+        self.assertEqual(filter(arr, (lambda x: x % 2 == 0)),
+                         from_list([2, 4, 6, 8, 10]))
+        self.assertEqual(filter(arr, (lambda x: x > 5)),
+                         from_list([6, 7, 8, 9, 10]))
         self.assertEqual(filter(arr, (lambda x: x > 10)), from_list([]))
 
     # 11 Map structure by specific function
     def test_map(self):
         arr = from_list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-        self.assertEqual(map(arr, (lambda x: x ** 2)), from_list([1, 4, 9, 16, 25, 36, 49, 64, 81, 100]))
-        self.assertEqual(map(arr, (lambda x: x + 1)), from_list([2, 3, 4, 5, 6, 7, 8, 9, 10, 11]))
-        self.assertEqual(map(arr, (lambda x: x ** 0)), from_list([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))
+        self.assertEqual(map(arr, (lambda x: x ** 2)),
+                         from_list([1, 4, 9, 16, 25, 36, 49, 64, 81, 100]))
+        self.assertEqual(map(arr, (lambda x: x + 1)),
+                         from_list([2, 3, 4, 5, 6, 7, 8, 9, 10, 11]))
+        self.assertEqual(map(arr, (lambda x: x ** 0)),
+                         from_list([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))
 
     # 12 Reduce process elements and build a value by the function
     def test_reduce(self):
@@ -213,12 +218,14 @@ class TestDynamicArray(unittest.TestCase):
         l4 = from_list(['cpu', 'gpu', 'storage', 'input', 'output'])
         self.assertEqual(map(l3, lambda x: x ** 2), from_list([1, 4, 9, 16]))
         self.assertEqual(map(l3, lambda x: x - 1), from_list([0, 1, 2, 3]))
-        self.assertEqual(map(l4, lambda x: x[0]), from_list(['c', 'g', 's', 'i', 'o']))
+        self.assertEqual(map(l4, lambda x: x[0]),
+                         from_list(['c', 'g', 's', 'i', 'o']))
         self.assertEqual(reduce(l3, (lambda x, y: x + y), 0), 10)
         self.assertEqual(reduce(l3, (lambda x, y: x + y), 1), 11)
         self.assertEqual(reduce(l3, (lambda x, y: x ** 2 + y), 0), 148)
         self.assertEqual(reduce(l3, (lambda x, y: x ** 2 + y), 1), 1525)
-        self.assertEqual(reduce(l4, (lambda x, y: x + y + '_'), ''), 'cpu_gpu_storage_input_output_')
+        self.assertEqual(reduce(l4, (lambda x, y: x + y + '_'), ''),
+                         'cpu_gpu_storage_input_output_')
         self.assertEqual(mempty(), DynamicArray())
 
 
