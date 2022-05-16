@@ -46,8 +46,8 @@ class DynamicArray(object):
 
 # 1 Add a new element
 def cons(element, arr):
-    l = [element] + arr.array()
-    new_arr = DynamicArray(l)
+    lst = [element] + arr.array()
+    new_arr = DynamicArray(lst)
     new_arr._size = length(arr) + 1
     return new_arr
 
@@ -171,17 +171,17 @@ def reduce(arr, func, initial_state):
 
 # 13 Function style iterator
 def iterator(arr):
-    l = arr
-    len = length(l)
+    lst = arr
+    len = length(lst)
     i = 0
 
     def foo():
-        nonlocal l
+        nonlocal lst
         nonlocal len
         nonlocal i
-        if (i >= len) | (l is None):
+        if (i >= len) | (lst is None):
             raise StopIteration
-        tmp = l.array()[i]
+        tmp = lst.array()[i]
         i += 1
         return tmp
 
