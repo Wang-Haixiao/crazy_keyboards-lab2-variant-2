@@ -14,7 +14,7 @@ and should check the implementation correctly works with None value.
 ## Project structure
 
 - `dynamic_array.py` -- implementation of `DynamicArray` immutable version.
-   
+
 - `dynamic_array_test.py` -- unit and PBT tests for `DynamicArray`.
 
 ## Features
@@ -47,10 +47,11 @@ and should check the implementation correctly works with None value.
 
 ## Design notes
 
-- By comparing the mutable implementation in Lab1, we find that, unlike directly modifying 
-the original data, the immutable implementation uses a new area in memory 
-to store the data without changing the original data.
-This design is more suitable for multi-threaded programming and provides greater security.
+- By comparing the mutable implementation in Lab1, we find that,
+unlike directly modifying the original data, the immutable implementation
+uses a new area in memory to store the data without changing the original data.
+This design is more suitable for multi-threaded programming
+and provides greater security.
 
 - Implementation restrictions
   - Avoid unnecessary data replication.
