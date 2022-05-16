@@ -1,8 +1,15 @@
-# GROUP-NAME - lab NUMBER - variant NUMBER
+# crazy-keyboards - lab 2 - variant 2
 
-This is an example project which demonstrates project structure and necessary
-CI checks. It is not the best structure for real-world projects, but good
-enough for educational purposes.
+Group Member:
+
+- Haixiao Wang 212320012
+- Yu Zhang     212320015
+
+## Variant description
+
+-  Dynamic array,
+
+and should check the implementation correctly works with None value.
 
 ## Project structure
 
