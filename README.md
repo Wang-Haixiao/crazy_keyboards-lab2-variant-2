@@ -47,7 +47,7 @@ and should check the implementation correctly works with None value.
 
 ## Design notes
 
-- By comparing the mutable implementation in Lab1, we find that, 
+- By comparing the mutable implementation in Lab1, we find that,
   unlike directly modifying the original data, the immutable implementation
   uses a new area in memory to store the data without changing the original data.
   This design is more suitable for multi-threaded programming
