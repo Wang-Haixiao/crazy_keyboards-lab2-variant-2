@@ -1,3 +1,4 @@
+from typing import Any, List
 import unittest
 from hypothesis import given
 import hypothesis.strategies as st
@@ -11,14 +12,14 @@ from dynamic_array import reduce, iterator, mempty, concat
 class TestDynamicArray(unittest.TestCase):
     # 1 cons
     @given(lst=st.lists(st.integers()), num=st.integers())
-    def test_cons(self, lst, num):
+    def test_cons(self, lst: List[Any], num: Any) -> None:
         arr = from_list(lst)
         lst.insert(0, num)
         self.assertEqual(cons(num, arr), from_list(lst))
 
     # 2 remove
     @given(lst=st.lists(st.integers()), num=st.integers())
-    def test_remove(self, lst, num):
+    def test_remove(self, lst: List[Any], num: Any) -> None:
         lst.insert(0, num)
         arr = from_list(lst)
         self.assertNotEqual(remove(arr, num), from_list(lst))
@@ -26,14 +27,14 @@ class TestDynamicArray(unittest.TestCase):
 
     # 3 Size
     @given(lst=st.lists(st.integers()))
-    def test_length(self, lst):
+    def test_length(self, lst: List[Any]) -> None:
         arr = from_list(lst)
         self.assertEqual(length(arr), len(lst))
         self.assertEqual(length(cons(None, arr)), len(lst)+1)
 
     # 4 Is member
     @given(lst=st.lists(st.integers()), num=st.integers())
-    def test_member(self, lst, num):
+    def test_member(self, lst: List[Any], num: Any) -> None:
         arr = from_list(lst)
         if None not in lst:
             self.assertFalse(member(arr, None))
@@ -42,14 +43,14 @@ class TestDynamicArray(unittest.TestCase):
 
     # 5 Reverse
     @given(lst=st.lists(st.integers()))
-    def test_reverse(self, lst):
+    def test_reverse(self, lst: List[Any]) -> None:
         arr = from_list(lst)
         lst.reverse()
         self.assertEqual(reverse(arr), from_list(lst))
 
     # 6 Intersection
     @given(lst1=st.lists(st.integers()), lst2=st.lists(st.text()))
-    def test_intersection(self, lst1, lst2):
+    def test_intersection(self, lst1: List[Any], lst2: List[Any]) -> None:
         arr1 = from_list(lst1)
         arr2 = from_list(lst2)
         if (lst1 != []) | (lst2 != []):
@@ -58,12 +59,12 @@ class TestDynamicArray(unittest.TestCase):
 
     # 7 To built-in list
     @given(lst=st.lists(st.integers()))
-    def test_to_list(self, lst):
+    def test_to_list(self, lst: List[Any]) -> None:
         arr = DynamicArray(lst)
         self.assertEqual(to_list(arr), lst)
 
     # 8 From built-in list
-    def test_from_list(self):
+    def test_from_list(self) -> None:
         test_data = [
             [],
             ['a'],
@@ -74,18 +75,18 @@ class TestDynamicArray(unittest.TestCase):
 
     # 7&8 To built-in list & From built-in list
     @given(lst=st.lists(st.integers()))
-    def test_to_list_from_list_equality(self, lst):
+    def test_to_list_from_list_equality(self, lst: List[Any]) -> None:
         self.assertEqual(to_list(from_list(lst)), lst)
 
     # 9 Find element by specific predicate
-    def test_find(self):
+    def test_find(self) -> None:
         arr = from_list([1, 2, 3])
         self.assertFalse(find(arr, (lambda x: x > 3)))
         self.assertTrue(find(arr, (lambda x: x % 2 == 0)))
         self.assertTrue(find(cons(4, arr), (lambda x: x > 3)))
 
     # 10 Filter data structure by specific predicate
-    def test_filter(self):
+    def test_filter(self) -> None:
         arr = from_list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
         self.assertEqual(filter(arr, (lambda x: x % 2 == 0)),
                          from_list([2, 4, 6, 8, 10]))
@@ -94,7 +95,7 @@ class TestDynamicArray(unittest.TestCase):
         self.assertEqual(filter(arr, (lambda x: x > 10)), from_list([]))
 
     # 11 Map structure by specific function
-    def test_map(self):
+    def test_map(self) -> None:
         arr = from_list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
         self.assertEqual(map(arr, (lambda x: x ** 2)),
                          from_list([1, 4, 9, 16, 25, 36, 49, 64, 81, 100]))
@@ -104,7 +105,7 @@ class TestDynamicArray(unittest.TestCase):
                          from_list([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))
 
     # 12 Reduce process elements and build a value by the function
-    def test_reduce(self):
+    def test_reduce(self) -> None:
         arr = from_list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
         self.assertEqual(reduce(arr, (lambda x, y: x + y), 0), 55)
         self.assertEqual(reduce(arr, (lambda x, y: x + y), 1), 56)
@@ -112,7 +113,7 @@ class TestDynamicArray(unittest.TestCase):
         self.assertEqual(reduce(arr, (lambda x, y: x ** 0 + y), 1), 11)
 
     # 13 Function style iterator
-    def test_iterator(self):
+    def test_iterator(self) -> None:
         lst = [1, 2, 3]
         arr = from_list(lst)
 
@@ -129,28 +130,33 @@ class TestDynamicArray(unittest.TestCase):
         self.assertRaises(StopIteration, lambda: get_next())
 
     # 14 Data structure should be a monoid and implement empty
-    def test_empty(self):
+    @given(st.lists(st.integers()))
+    def test_empty(self, lst: List[Any]) -> None:
+        arr = from_list(lst)
         self.assertEqual(mempty(), DynamicArray())
         self.assertEqual(mempty(), from_list([]))
         self.assertNotEqual(mempty(), None)
+        self.assertEqual(concat(mempty(), arr), arr)
+        self.assertEqual(concat(arr, mempty()), arr)
+        self.assertEqual(concat(arr, mempty()), concat(mempty(), arr))
 
     # 15 Data structure should be a monoid and implement concat
     @given(lst1=st.lists(st.integers()), lst2=st.lists(st.integers()))
-    def test_concat(self, lst1, lst2):
+    def test_concat(self, lst1: List[Any], lst2: List[Any]) -> None:
         arr1 = from_list(lst1)
         arr2 = from_list(lst2)
         self.assertEqual(concat(arr1, arr2), from_list(lst1 + lst2))
 
-    # 14&15 Monoid identity
+    # 14&15 PBT for monoid identity
     @given(st.lists(st.integers()))
-    def test_monoid_identity(self, lst):
+    def test_monoid_identity(self, lst: List[Any]) -> None:
         arr = from_list(lst)
         self.assertEqual(concat(mempty(), arr), arr)
         self.assertEqual(concat(arr, mempty()), arr)
 
     # 16 String serialization
     @given(lst1=st.lists(st.integers()), lst2=st.lists(st.integers()))
-    def test_str(self, lst1, lst2):
+    def test_str(self, lst1: List[Any], lst2: List[Any]) -> None:
         a = from_list(lst1)
         b = from_list(lst1)
         c = from_list(lst2)
@@ -160,7 +166,7 @@ class TestDynamicArray(unittest.TestCase):
 
     # 17 Check equality method
     @given(lst1=st.lists(st.integers()), lst2=st.lists(st.integers()))
-    def test_eq(self, lst1, lst2):
+    def test_eq(self, lst1: List[Any], lst2: List[Any]) -> None:
         a = from_list(lst1)
         b = from_list(lst1)
         c = from_list(lst2)
@@ -173,7 +179,7 @@ class TestDynamicArray(unittest.TestCase):
             self.assertEqual(b, c)
 
     # 18 API test
-    def test_api(self):
+    def test_api(self) -> None:
         empty = DynamicArray()
         l1 = cons(None, cons(1, empty))
         l2 = cons(1, cons(None, empty))
