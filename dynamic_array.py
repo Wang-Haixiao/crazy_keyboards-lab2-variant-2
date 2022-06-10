@@ -68,7 +68,7 @@ def cons(element: Any, arr: Optional[DynamicArray]) -> DynamicArray:
 
 def remove(arr: Optional[DynamicArray], element: Any) -> DynamicArray:
     """2: Remove an element by value"""
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return DynamicArray()
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -87,7 +87,7 @@ def length(arr: Optional[DynamicArray]) -> int:
 
 def member(arr: Optional[DynamicArray], element: Any) -> bool:
     """4: Is member"""
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return False
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -98,7 +98,7 @@ def member(arr: Optional[DynamicArray], element: Any) -> bool:
 
 def reverse(arr: Optional[DynamicArray]) -> DynamicArray:
     """5: Reverse"""
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return DynamicArray()
     v = arr.array()[length(arr) - 1]
     rest_arr = from_list(arr.array()[0:length(arr) - 1])
@@ -108,7 +108,7 @@ def reverse(arr: Optional[DynamicArray]) -> DynamicArray:
 def intersection(arr1: Optional[DynamicArray],
                  arr2: Optional[DynamicArray]) -> bool:
     """6: Intersection"""
-    if length(arr1) == 0:
+    if (arr1 is None) or (length(arr1) == 0) or (arr2 is None):
         return False
     v = arr1.array()[0]
     rest_arr = from_list(arr1.array()[1:length(arr1)])
@@ -143,7 +143,7 @@ def find(arr: Optional[DynamicArray],
          func: Optional[Callable[..., Any]] = None) -> bool:
     """9: Find element by specific predicate"""
     assert callable(func), "The function is not callable."
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return False
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -156,7 +156,7 @@ def filter(arr: Optional[DynamicArray],
            func: Optional[Callable[..., Any]] = None) -> DynamicArray:
     """10: Filter data structure by specific predicate"""
     assert callable(func), "The function is not callable."
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return DynamicArray()
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -169,7 +169,7 @@ def map(arr: Optional[DynamicArray],
         func: Optional[Callable[..., Any]] = None) -> DynamicArray:
     """11: Map structure by specific function"""
     assert callable(func), "The function is not callable."
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return DynamicArray()
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -181,7 +181,7 @@ def reduce(arr: Optional[DynamicArray],
            initial_state: Any = None) -> Any:
     """12: Reduce process elements and build a value by the function"""
     assert callable(func), "The function is not callable."
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return initial_state
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -219,7 +219,7 @@ def concat(arr1: Optional[DynamicArray],
     rest_arr = arr1
     new_arr = arr2
     len = length(rest_arr)
-    if len == 0:
+    if (len == 0) or (arr1 is None):
         return new_arr
     v = rest_arr.array()[len - 1]
     new_arr = cons(v, arr2)
