@@ -1,4 +1,4 @@
-from typing import Any, Optional, List, Callable
+from typing import Any, Optional, List, Callable, Union
 
 
 class DynamicArray(object):
@@ -119,7 +119,7 @@ def intersection(arr1: Optional[DynamicArray],
 
 def to_list(arr: Optional[DynamicArray]) -> List[Any]:
     """7: To built-in list"""
-    res = []
+    res: List[Any] = []
 
     def builder(lst):
         if length(lst) == 0:
@@ -132,7 +132,7 @@ def to_list(arr: Optional[DynamicArray]) -> List[Any]:
     return builder(arr)
 
 
-def from_list(lst: List[Any]) -> DynamicArray:
+def from_list(lst: Union[List[Any], object]) -> DynamicArray:
     """8: From built-in list"""
     if len(lst) == 0:
         return DynamicArray()
@@ -213,8 +213,8 @@ def mempty() -> DynamicArray:
     return DynamicArray()
 
 
-def concat(arr1: Optional[DynamicArray],
-           arr2: Optional[DynamicArray]) -> DynamicArray:
+def concat(arr1: DynamicArray,
+           arr2: DynamicArray) -> DynamicArray:
     """15: Data structure should be a monoid and implement concat"""
     rest_arr = arr1
     new_arr = arr2
