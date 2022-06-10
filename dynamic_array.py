@@ -2,7 +2,7 @@ from typing import Any, Optional, List, Callable
 
 
 class DynamicArray(object):
-    def __init__(self, lst: Optional[List[Any]] = [],
+    def __init__(self, lst: List[Any] = [],
                  capacity: int = 0,
                  growth_factor: int = 2) -> None:
         self._capacity = capacity
