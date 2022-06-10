@@ -54,13 +54,16 @@ class DynamicArray(object):
         return self._items[0:self._size]
 
 
-def cons(element: Any, arr: Optional[DynamicArray] = None) -> DynamicArray:
+def cons(element: Any, arr: Optional[DynamicArray]) -> DynamicArray:
     """1: Add a new element"""
     new_arr = mempty()
     new_arr.add(element)
-    for i in range(length(arr)):
-        new_arr.add(arr.array()[i])
-    return new_arr
+    if arr is None:
+        return new_arr
+    else:
+        for i in range(length(arr)):
+            new_arr.add(arr.array()[i])
+        return new_arr
 
 
 def remove(arr: Optional[DynamicArray], element: Any) -> DynamicArray:
@@ -218,7 +221,7 @@ def concat(arr1: Optional[DynamicArray],
     len = length(rest_arr)
     if len == 0:
         return new_arr
-    v = rest_arr.array()[len-1]
+    v = rest_arr.array()[len - 1]
     new_arr = cons(v, arr2)
-    rest_arr = from_list(arr1.array()[0:len-1])
+    rest_arr = from_list(arr1.array()[0:len - 1])
     return concat(rest_arr, new_arr)
