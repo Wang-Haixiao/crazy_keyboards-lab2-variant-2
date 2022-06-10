@@ -1,4 +1,4 @@
-from typing import Any, Optional, List, Callable, Union
+from typing import Any, Optional, List, Callable
 
 
 class DynamicArray(object):
@@ -132,7 +132,7 @@ def to_list(arr: Optional[DynamicArray]) -> List[Any]:
     return builder(arr)
 
 
-def from_list(lst: Union[List[Any], object]) -> DynamicArray:
+def from_list(lst: List[Any]) -> DynamicArray:
     """8: From built-in list"""
     if len(lst) == 0:
         return DynamicArray()
