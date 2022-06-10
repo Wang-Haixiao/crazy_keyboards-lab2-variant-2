@@ -21,13 +21,13 @@ and should check the implementation correctly works with None value.
 
 - PBT test: `test_cons`, `test_remove`, `test_length`, `test_member`, `test_reverse`,
 
-`test_intersection`, `test_to_list`, `test_to_list_from_list_equality`, `test_concat`,
+`test_intersection`, `test_to_list`, `test_to_list_from_list_equality`, `test_empty`,
 
-`test_monoid_identity`, `test_str`, `test_eq`.
+ `test_concat`, `test_monoid_identity`, `test_str`, `test_eq`.
 
 - Other unit test: `test_from_list`, `test_find`, `test_filter`, `test_map`,
 
-`test_reduce`, `test_iterator`, `test_empty`.
+`test_reduce`, `test_iterator`.
 
 - API test: `test_api`.
 
@@ -39,6 +39,12 @@ and should check the implementation correctly works with None value.
 
 ## Changelog
 
+- 10.06.2022 - 2
+  - Rewrite cons and concat
+  - Add PBT for all monoid properties
+  - Remove loops and use recursion instead
+  - Add docstrings for all functions
+  - Add type hints
 - 16.05.2022 - 1
   - Update README. Add formal sections.
   - Fixed some formatting issues
