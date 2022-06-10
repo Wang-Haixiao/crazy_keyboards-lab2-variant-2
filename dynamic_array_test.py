@@ -66,7 +66,7 @@ class TestDynamicArray(unittest.TestCase):
     # 8 From built-in list
     def test_from_list(self) -> None:
         test_data = [
-            [],
+            [''],
             ['a'],
             ['a', 'b']
         ]
