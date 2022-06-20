@@ -1,8 +1,10 @@
-from typing import Any, Optional, List, Callable, Union, NoReturn
+from typing import Any, Optional, List, Callable, Union, NoReturn, TypeVar
+
+T = TypeVar('T', int, float, str, None)
 
 
 class DynamicArray(object):
-    def __init__(self, lst: List[Union[int, str, None]] = [],
+    def __init__(self, lst: List[Union[T]] = [],
                  capacity: int = 0,
                  growth_factor: int = 2) -> None:
         self._capacity = capacity
@@ -41,7 +43,7 @@ class DynamicArray(object):
         self._items += [None] * (self._capacity - self._size)
         return
 
-    def add(self, ele: Union[int, str, None]) -> NoReturn:
+    def add(self, ele: Union[T]) -> NoReturn:
         if self._size == self._capacity:
             DynamicArray.grow(self)
         self._items[self._size] = ele
@@ -50,11 +52,11 @@ class DynamicArray(object):
     def size(self) -> int:
         return self._size
 
-    def array(self) -> List[Union[int, str, None]]:
+    def array(self) -> List[Union[T]]:
         return self._items[0:self._size]
 
 
-def cons(element: Union[int, str, None],
+def cons(element: Union[T],
          arr: Optional[DynamicArray]) -> DynamicArray:
     """1: Add a new element"""
     new_arr = mempty()
@@ -68,7 +70,7 @@ def cons(element: Union[int, str, None],
 
 
 def remove(arr: Optional[DynamicArray],
-           element: Union[int, str, None]) -> DynamicArray:
+           element: Union[T]) -> DynamicArray:
     """2: Remove an element by value"""
     if (arr is None) or (length(arr) == 0):
         return DynamicArray()
@@ -88,7 +90,7 @@ def length(arr: Optional[DynamicArray]) -> int:
 
 
 def member(arr: Optional[DynamicArray],
-           element: Union[int, str, None]) -> bool:
+           element: Union[T]) -> bool:
     """4: Is member"""
     if (arr is None) or (length(arr) == 0):
         return False
@@ -135,7 +137,7 @@ def to_list(arr: Optional[DynamicArray]) -> List[Any]:
     return builder(arr)
 
 
-def from_list(lst: List[Union[int, str, None]]) -> DynamicArray:
+def from_list(lst: List[Union[T]]) -> DynamicArray:
     """8: From built-in list"""
     if len(lst) == 0:
         return DynamicArray()
