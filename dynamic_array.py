@@ -1,8 +1,8 @@
-from typing import Any, Optional, List, Callable, Union
+from typing import Any, Optional, List, Callable
 
 
 class DynamicArray(object):
-    def __init__(self, lst: Optional[List[Any]] = [],
+    def __init__(self, lst: List[Any] = [],
                  capacity: int = 0,
                  growth_factor: int = 2) -> None:
         self._capacity = capacity
@@ -41,7 +41,7 @@ class DynamicArray(object):
         self._items += [None] * (self._capacity - self._size)
         return
 
-    def add(self, ele: Union[int, str, None]) -> None:
+    def add(self, ele: Any) -> None:
         if self._size == self._capacity:
             DynamicArray.grow(self)
         self._items[self._size] = ele
@@ -50,24 +50,25 @@ class DynamicArray(object):
     def size(self) -> int:
         return self._size
 
-    def array(self) -> List[Union[int, str, None]]:
+    def array(self) -> List[Any]:
         return self._items[0:self._size]
 
 
-def cons(element: Union[int, str, None],
-         arr: Optional[DynamicArray] = None) -> DynamicArray:
+def cons(element: Any, arr: Optional[DynamicArray]) -> DynamicArray:
     """1: Add a new element"""
     new_arr = mempty()
     new_arr.add(element)
-    for i in range(length(arr)):
-        new_arr.add(arr.array()[i])
-    return new_arr
+    if arr is None:
+        return new_arr
+    else:
+        for i in range(length(arr)):
+            new_arr.add(arr.array()[i])
+        return new_arr
 
 
-def remove(arr: Optional[DynamicArray],
-           element: Union[int, str, None]) -> DynamicArray:
+def remove(arr: Optional[DynamicArray], element: Any) -> DynamicArray:
     """2: Remove an element by value"""
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return DynamicArray()
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -84,10 +85,9 @@ def length(arr: Optional[DynamicArray]) -> int:
     return arr.size()
 
 
-def member(arr: Optional[DynamicArray],
-           element: Union[int, str, None]) -> bool:
+def member(arr: Optional[DynamicArray], element: Any) -> bool:
     """4: Is member"""
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return False
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -98,7 +98,7 @@ def member(arr: Optional[DynamicArray],
 
 def reverse(arr: Optional[DynamicArray]) -> DynamicArray:
     """5: Reverse"""
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return DynamicArray()
     v = arr.array()[length(arr) - 1]
     rest_arr = from_list(arr.array()[0:length(arr) - 1])
@@ -108,7 +108,7 @@ def reverse(arr: Optional[DynamicArray]) -> DynamicArray:
 def intersection(arr1: Optional[DynamicArray],
                  arr2: Optional[DynamicArray]) -> bool:
     """6: Intersection"""
-    if length(arr1) == 0:
+    if (arr1 is None) or (length(arr1) == 0) or (arr2 is None):
         return False
     v = arr1.array()[0]
     rest_arr = from_list(arr1.array()[1:length(arr1)])
@@ -117,9 +117,9 @@ def intersection(arr1: Optional[DynamicArray],
     return intersection(rest_arr, arr2)
 
 
-def to_list(arr: Optional[DynamicArray]) -> List[Union[int, str, None]]:
+def to_list(arr: Optional[DynamicArray]) -> List[Any]:
     """7: To built-in list"""
-    res = []
+    res: List[Any] = []
 
     def builder(lst):
         if length(lst) == 0:
@@ -132,7 +132,7 @@ def to_list(arr: Optional[DynamicArray]) -> List[Union[int, str, None]]:
     return builder(arr)
 
 
-def from_list(lst: List[Union[int, str, None]]) -> DynamicArray:
+def from_list(lst: List[Any]) -> DynamicArray:
     """8: From built-in list"""
     if len(lst) == 0:
         return DynamicArray()
@@ -143,7 +143,7 @@ def find(arr: Optional[DynamicArray],
          func: Optional[Callable[..., Any]] = None) -> bool:
     """9: Find element by specific predicate"""
     assert callable(func), "The function is not callable."
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return False
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -156,7 +156,7 @@ def filter(arr: Optional[DynamicArray],
            func: Optional[Callable[..., Any]] = None) -> DynamicArray:
     """10: Filter data structure by specific predicate"""
     assert callable(func), "The function is not callable."
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return DynamicArray()
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -169,7 +169,7 @@ def map(arr: Optional[DynamicArray],
         func: Optional[Callable[..., Any]] = None) -> DynamicArray:
     """11: Map structure by specific function"""
     assert callable(func), "The function is not callable."
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return DynamicArray()
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -181,7 +181,7 @@ def reduce(arr: Optional[DynamicArray],
            initial_state: Any = None) -> Any:
     """12: Reduce process elements and build a value by the function"""
     assert callable(func), "The function is not callable."
-    if length(arr) == 0:
+    if (arr is None) or (length(arr) == 0):
         return initial_state
     v = arr.array()[0]
     rest_arr = from_list(arr.array()[1:length(arr)])
@@ -213,15 +213,15 @@ def mempty() -> DynamicArray:
     return DynamicArray()
 
 
-def concat(arr1: Optional[DynamicArray],
-           arr2: Optional[DynamicArray]) -> DynamicArray:
+def concat(arr1: DynamicArray,
+           arr2: DynamicArray) -> DynamicArray:
     """15: Data structure should be a monoid and implement concat"""
     rest_arr = arr1
     new_arr = arr2
     len = length(rest_arr)
-    if len == 0:
+    if (len == 0) or (arr1 is None):
         return new_arr
-    v = rest_arr.array()[len-1]
+    v = rest_arr.array()[len - 1]
     new_arr = cons(v, arr2)
-    rest_arr = from_list(arr1.array()[0:len-1])
+    rest_arr = from_list(arr1.array()[0:len - 1])
     return concat(rest_arr, new_arr)
