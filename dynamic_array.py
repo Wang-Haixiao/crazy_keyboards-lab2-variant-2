@@ -1,4 +1,4 @@
-from typing import Any, Optional, List, Callable
+from typing import Any, Optional, List, Callable, Union
 
 
 class DynamicArray(object):
@@ -41,7 +41,7 @@ class DynamicArray(object):
         self._items += [None] * (self._capacity - self._size)
         return
 
-    def add(self, ele: Any) -> None:
+    def add(self, ele: Union[int, str, None]) -> None:
         if self._size == self._capacity:
             DynamicArray.grow(self)
         self._items[self._size] = ele
@@ -50,11 +50,12 @@ class DynamicArray(object):
     def size(self) -> int:
         return self._size
 
-    def array(self) -> List[Any]:
+    def array(self) -> List[Union[int, str, None]]:
         return self._items[0:self._size]
 
 
-def cons(element: Any, arr: Optional[DynamicArray]) -> DynamicArray:
+def cons(element: Union[int, str, None],
+         arr: Optional[DynamicArray]) -> DynamicArray:
     """1: Add a new element"""
     new_arr = mempty()
     new_arr.add(element)
@@ -66,7 +67,8 @@ def cons(element: Any, arr: Optional[DynamicArray]) -> DynamicArray:
         return new_arr
 
 
-def remove(arr: Optional[DynamicArray], element: Any) -> DynamicArray:
+def remove(arr: Optional[DynamicArray],
+           element: Union[int, str, None]) -> DynamicArray:
     """2: Remove an element by value"""
     if (arr is None) or (length(arr) == 0):
         return DynamicArray()
@@ -85,7 +87,8 @@ def length(arr: Optional[DynamicArray]) -> int:
     return arr.size()
 
 
-def member(arr: Optional[DynamicArray], element: Any) -> bool:
+def member(arr: Optional[DynamicArray],
+           element: Union[int, str, None]) -> bool:
     """4: Is member"""
     if (arr is None) or (length(arr) == 0):
         return False
@@ -132,7 +135,7 @@ def to_list(arr: Optional[DynamicArray]) -> List[Any]:
     return builder(arr)
 
 
-def from_list(lst: List[Any]) -> DynamicArray:
+def from_list(lst: List[Union[int, str, None]]) -> DynamicArray:
     """8: From built-in list"""
     if len(lst) == 0:
         return DynamicArray()
