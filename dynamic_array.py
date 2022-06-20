@@ -1,8 +1,8 @@
-from typing import Any, Optional, List, Callable, Union
+from typing import Any, Optional, List, Callable, Union, NoReturn
 
 
 class DynamicArray(object):
-    def __init__(self, lst: List[Any] = [],
+    def __init__(self, lst: List[Union[int, str, None]] = [],
                  capacity: int = 0,
                  growth_factor: int = 2) -> None:
         self._capacity = capacity
@@ -41,7 +41,7 @@ class DynamicArray(object):
         self._items += [None] * (self._capacity - self._size)
         return
 
-    def add(self, ele: Union[int, str, None]) -> None:
+    def add(self, ele: Union[int, str, None]) -> NoReturn:
         if self._size == self._capacity:
             DynamicArray.grow(self)
         self._items[self._size] = ele
