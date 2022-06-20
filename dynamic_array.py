@@ -1,10 +1,8 @@
-from typing import Any, Optional, List, Callable, Union, NoReturn, TypeVar
-
-T = TypeVar('T', int, float, str, None)
+from typing import Any, Optional, List, Callable
 
 
 class DynamicArray(object):
-    def __init__(self, lst: List[Union[T]] = [],
+    def __init__(self, lst: List[Any] = [],
                  capacity: int = 0,
                  growth_factor: int = 2) -> None:
         self._capacity = capacity
@@ -43,7 +41,7 @@ class DynamicArray(object):
         self._items += [None] * (self._capacity - self._size)
         return
 
-    def add(self, ele: Union[T]) -> NoReturn:
+    def add(self, ele: Any) -> None:
         if self._size == self._capacity:
             DynamicArray.grow(self)
         self._items[self._size] = ele
@@ -52,12 +50,11 @@ class DynamicArray(object):
     def size(self) -> int:
         return self._size
 
-    def array(self) -> List[Union[T]]:
+    def array(self) -> List[Any]:
         return self._items[0:self._size]
 
 
-def cons(element: Union[T],
-         arr: Optional[DynamicArray]) -> DynamicArray:
+def cons(element: Any, arr: Optional[DynamicArray]) -> DynamicArray:
     """1: Add a new element"""
     new_arr = mempty()
     new_arr.add(element)
@@ -69,8 +66,7 @@ def cons(element: Union[T],
         return new_arr
 
 
-def remove(arr: Optional[DynamicArray],
-           element: Union[T]) -> DynamicArray:
+def remove(arr: Optional[DynamicArray], element: Any) -> DynamicArray:
     """2: Remove an element by value"""
     if (arr is None) or (length(arr) == 0):
         return DynamicArray()
@@ -89,8 +85,7 @@ def length(arr: Optional[DynamicArray]) -> int:
     return arr.size()
 
 
-def member(arr: Optional[DynamicArray],
-           element: Union[T]) -> bool:
+def member(arr: Optional[DynamicArray], element: Any) -> bool:
     """4: Is member"""
     if (arr is None) or (length(arr) == 0):
         return False
@@ -137,7 +132,7 @@ def to_list(arr: Optional[DynamicArray]) -> List[Any]:
     return builder(arr)
 
 
-def from_list(lst: List[Union[T]]) -> DynamicArray:
+def from_list(lst: List[Any]) -> DynamicArray:
     """8: From built-in list"""
     if len(lst) == 0:
         return DynamicArray()
