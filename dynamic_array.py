@@ -1,4 +1,4 @@
-from typing import Any, Optional, List, Callable
+from typing import Any, Optional, List, Callable, Union
 
 
 class DynamicArray(object):
@@ -41,7 +41,7 @@ class DynamicArray(object):
         self._items += [None] * (self._capacity - self._size)
         return
 
-    def add(self, ele: Optional[int, str]) -> None:
+    def add(self, ele: Union[int, str, None]) -> None:
         if self._size == self._capacity:
             DynamicArray.grow(self)
         self._items[self._size] = ele
@@ -50,11 +50,11 @@ class DynamicArray(object):
     def size(self) -> int:
         return self._size
 
-    def array(self) -> List[Optional[int, str]]:
+    def array(self) -> List[Union[int, str, None]]:
         return self._items[0:self._size]
 
 
-def cons(element: Optional[int, str], arr: Optional[DynamicArray] = None) -> DynamicArray:
+def cons(element: Union[int, str, None], arr: Optional[DynamicArray] = None) -> DynamicArray:
     """1: Add a new element"""
     new_arr = mempty()
     new_arr.add(element)
@@ -63,7 +63,7 @@ def cons(element: Optional[int, str], arr: Optional[DynamicArray] = None) -> Dyn
     return new_arr
 
 
-def remove(arr: Optional[DynamicArray], element: Optional[int, str]) -> DynamicArray:
+def remove(arr: Optional[DynamicArray], element: Union[int, str, None]) -> DynamicArray:
     """2: Remove an element by value"""
     if length(arr) == 0:
         return DynamicArray()
@@ -82,7 +82,7 @@ def length(arr: Optional[DynamicArray]) -> int:
     return arr.size()
 
 
-def member(arr: Optional[DynamicArray], element: Optional[int, str]) -> bool:
+def member(arr: Optional[DynamicArray], element: Union[int, str, None]) -> bool:
     """4: Is member"""
     if length(arr) == 0:
         return False
@@ -114,7 +114,7 @@ def intersection(arr1: Optional[DynamicArray],
     return intersection(rest_arr, arr2)
 
 
-def to_list(arr: Optional[DynamicArray]) -> List[Optional[int, str]]:
+def to_list(arr: Optional[DynamicArray]) -> List[Union[int, str, None]]:
     """7: To built-in list"""
     res = []
 
@@ -129,7 +129,7 @@ def to_list(arr: Optional[DynamicArray]) -> List[Optional[int, str]]:
     return builder(arr)
 
 
-def from_list(lst: List[Optional[int, str]]) -> DynamicArray:
+def from_list(lst: List[Union[int, str, None]]) -> DynamicArray:
     """8: From built-in list"""
     if len(lst) == 0:
         return DynamicArray()
