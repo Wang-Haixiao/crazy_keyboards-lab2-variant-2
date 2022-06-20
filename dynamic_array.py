@@ -54,7 +54,8 @@ class DynamicArray(object):
         return self._items[0:self._size]
 
 
-def cons(element: Union[int, str, None], arr: Optional[DynamicArray] = None) -> DynamicArray:
+def cons(element: Union[int, str, None],
+         arr: Optional[DynamicArray] = None) -> DynamicArray:
     """1: Add a new element"""
     new_arr = mempty()
     new_arr.add(element)
@@ -63,7 +64,8 @@ def cons(element: Union[int, str, None], arr: Optional[DynamicArray] = None) -> 
     return new_arr
 
 
-def remove(arr: Optional[DynamicArray], element: Union[int, str, None]) -> DynamicArray:
+def remove(arr: Optional[DynamicArray],
+           element: Union[int, str, None]) -> DynamicArray:
     """2: Remove an element by value"""
     if length(arr) == 0:
         return DynamicArray()
@@ -82,7 +84,8 @@ def length(arr: Optional[DynamicArray]) -> int:
     return arr.size()
 
 
-def member(arr: Optional[DynamicArray], element: Union[int, str, None]) -> bool:
+def member(arr: Optional[DynamicArray],
+           element: Union[int, str, None]) -> bool:
     """4: Is member"""
     if length(arr) == 0:
         return False
